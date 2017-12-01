@@ -13,7 +13,7 @@ var app = new Vue({
   	recupererListe: function(){
 		fetch('api/liste.php', {method: "GET", credentials: 'same-origin'})
 		.then(function(response){
-		return response.json();
+		return response.json(); //récupération des todo
 		})
 		.then(function(response) {
 		app.taches = response;
@@ -24,9 +24,9 @@ var app = new Vue({
   	},
   	  ajout: function () {
       var contenu = document.getElementById("texte").value;
-      if(contenu == ""){
-        swal("Oops","Vous devez spécifier du texte…" , "error" );
-      }else{
+      if(contenu == ""){ //Si le todo est vite alors message d'erreur
+        swal("Oops","Vous devez specifier du texte…" , "error" );
+      }else{ // Sinon appel de l'API
 		var form = new FormData();
 		form.append('texte', contenu);
 		fetch("api/creation.php", {
@@ -41,7 +41,7 @@ var app = new Vue({
 		  if(response.success){
 		    app.recupererListe();
 		  }else{
-		    // Sweetalert pour l’utilisateur.
+		  swal("Oops","Vous devez specifier du texte…" , "error" );
 		  }
 		})
 		.catch(function(error) {
@@ -50,27 +50,35 @@ var app = new Vue({
       }
     },
     terminer: function(id){
-    	fetch('api/terminer.php', {
+    	fetch('api/terminer.php?id=' +id, {
     		method: "GET",
     		credentials: 'same-origin'
-    	})
-    	if("terminer.php?id=="+id){
-    		.then(function(response){
+    	}).then(function(response){
 		return response.json();
-		})
-		.then(function(response) {
+		}).then(function(response) {
 		app.recupererListe();
-		})
-    	}
-    	else{
-    		.catch(function(error) {
+		}).catch(function(error) {
 		console.log('Récupération impossible: ' + error.message);
-		});
-    	}
+		})
+    	},
+    suppression: function(id){
+    	fetch('api/suppression.php?id=' +id, {
+    		method: "GET",
+    		credentials: 'same-origin'
+    	}).then(function(response){
+		return response.json();
+		}).then(function(response) {
+		app.recupererListe();
+		}).catch(function(error) {
+		console.log('Récupération impossible: ' + error.message);
+		})
+    	}	
+
+
 		
 		
     }
-  }
+  })
 
 
-})
+

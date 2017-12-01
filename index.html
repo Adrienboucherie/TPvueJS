@@ -54,8 +54,8 @@
           <li class="list-group-item" id="{id} "  v-for="tache in taches">
             <span>{{tache.texte}}</span>
             <div class="pull-right action">
-              <!-- IF "{to_bool_01(termine)}" == "0" --><span class="oi oi-check" v-on:click="terminer(todo.id)" v-if="!tache.termine"></span></a><!-- FI -->
-              <!-- IF "{to_bool_01(termine)}" == "1" --><span class="oi oi-trash"  v-if="!tache.termine"></span><!-- FI -->
+              <!-- IF "{to_bool_01(termine)}" == "0" --><span class="oi oi-check"   v-on:click="terminer(tache.id)" v-if="!tache.termine"></span></a><!-- FI -->
+              <!-- IF "{to_bool_01(termine)}" == "1" --><span class="oi oi-trash"  v-on:click="suppression(tache.id)"  v-if="tache.termine"></span><!-- FI -->
             </div>
           </li>
           <!-- ENDEACH -->
